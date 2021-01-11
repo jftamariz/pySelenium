@@ -1,0 +1,19 @@
+# Ignore pycache
+__pycache__
+*/__pycache__
+.pytest_cache
+.DS_Store
+.dockerignore
+
+# Ignore virtual environment directory
+pyseleniumallure_env
+pyseleniumallure_envi
+
+# Ignore test results and reports
+test_results
+
+# Ignore drivers
+drivers
+
+*.bat
+

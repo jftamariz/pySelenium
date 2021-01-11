@@ -1,0 +1,8 @@
+selenium==3.141.0
+requests==2.22.0
+pytest==6.0.1
+boto3==1.13.3
+PyMySQL==0.9.3
+allure-pytest==2.8.0
+pytest-xdist==2.2.0
+colorama==0.4.4

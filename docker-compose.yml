@@ -1,0 +1,67 @@
+version: '3.7'
+
+services:
+
+    selenium_chrome:
+        image: selenium/standalone-chrome
+        container_name: selenium_chrome
+        networks:
+          - pyselenium-net
+        volumes:
+          - /dev/shm:/dev/shm
+        ports:
+          - "4444:4444"
+
+    selenium_firefox:
+        image: selenium/standalone-firefox:4.0.0-beta-1-prerelease-20210106
+        container_name: selenium_firefox
+        networks:
+          - pyselenium-net
+        volumes:
+          - /dev/shm:/dev/shm
+        ports:
+          - "4444:4444"
+
+    py_tests_chrome:
+        build:  .
+        depends_on:
+          - selenium_chrome
+        networks:
+          - pyselenium-net
+        volumes:
+          - ./test_results/allure_results:/app/test_results/allure_results
+        command: "pytest -s tests/ --host selenium_chrome --port 4444 --alluredir=test_results/allure_results/"
+
+    py_tests_firefox:
+        build:  .
+        depends_on:
+          - selenium_firefox
+        networks:
+          - pyselenium-net
+        volumes:
+          - ./test_results/allure_results:/app/test_results/allure_results
+        command: "pytest -s tests/ --browser firefox --host selenium_firefox --port 4444 --alluredir=test_results/allure_results/"
+
+    py_tests_chrome_smoke:
+        build:  .
+        depends_on:
+          - selenium_chrome
+        networks:
+          - pyselenium-net
+        volumes:
+          - ./test_results/allure_results:/app/test_results/allure_results
+        command: "pytest -s -m smoke --host selenium_chrome --port 4444 --alluredir=test_results/allure_results/"
+
+    py_tests_firefox_smoke:
+        build:  .
+        depends_on:
+          - selenium_firefox
+        networks:
+          - pyselenium-net
+        volumes:
+          - ./test_results/allure_results:/app/test_results/allure_results
+        command: "pytest -s -m smoke --browser firefox --host selenium_firefox --port 4444 --alluredir=test_results/allure_results/"
+
+networks:
+    pyselenium-net:
+      driver: bridge

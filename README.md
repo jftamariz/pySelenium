@@ -14,24 +14,24 @@ the other containers running the Selenium-Pytest automation scripts.
   
 2.  Run Smoke tests with Chrome browser in two Docker containers
 
-'''
-./runPySeleniumTests.sh —smoke —docker   
-'''
+```
+  $ ./runPySeleniumTests.sh —smoke —docker   
+```
 
 3.  Run Regression tests with Firefox browser
-'''
-./runPySeleniumTests.sh  —docker —browser firefox
-'''
+```
+  $ ./runPySeleniumTests.sh  —docker —browser firefox
+```
 
 4.  View test results with Allure reports.  Test results should be saved under directory /test_results/allure_results 
-'''
-allure serve test_results/allure_results 
-'''
+```
+  $ allure serve test_results/allure_results 
+```
 
 5.  Don’t forget to bring down the containers after tests are finished
-'''
-docker-compose down
-'''
+```
+  $ docker-compose down
+```
 
 ### Run Tests  Local - Mac
 Running tests on a Mac will require more installation than running on them a Docker container
@@ -48,44 +48,44 @@ Running tests on a Mac will require more installation than running on them a Doc
 	*  Gheckodriver - this repo includes a Firefox-Geckodriver executable under the /driver filter.  Feel free to download a different version.
 	
   _Note:  These browser driver executables may need updated access mode_
-  '''
+  ```
     $ chmod +x chromedriver
-  '''
+  ```
   
 2.  Create and activate a Virtual Environment
-'''
+```
   $ virtuaenv pyselenium_env
 
 	$ source pyselenium_env/bin/activate 
-'''
+```
 
 3.  Install Dependencies
-'''
+```
   $ pip install -r requirements.txt
-'''
+```
 
 4.  Run Smoke tests with Chrome browser 
-'''
+```
   $ ./runPySeleniumTests.sh 
-'''
+```
 
 5.  Run Regression with Firefox
-'''
+```
   $ /runPySeleniumTests.sh  —browser Firefox
-'''
+```
 
 6.  Run Regression with test cases requiring login credentials from a registered user
-'''
-	$ ./runPySeleniumTests.sh —email some_email@gmail.com  —password same_valid_password  
-'''
+```
+  $ ./runPySeleniumTests.sh —email some_email@gmail.com  —password same_valid_password  
+```
 
 7.  View test results with Allure reports.  Test results should be saved under directory /test_results/allure_results 
-'''
-	allure serve test_results/allure_results 
-'''
+```
+  allure serve test_results/allure_results 
+```
 
 8.  Don’t forget to bring down the containers after tests are finished.
-'''
-	docker-compose down
-'''
+```
+  docker-compose down
+```
 

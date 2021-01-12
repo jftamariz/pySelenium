@@ -13,23 +13,24 @@ the other containers running the Selenium-Pytest automation scripts.
   * Allure 2.13+
   
 2.  Run Smoke tests with Chrome browser in two Docker containers
+
 '''
-  $ ./runPySeleniumTests.sh —smoke —docker   
+./runPySeleniumTests.sh —smoke —docker   
 '''
 
 3.  Run Regression tests with Firefox browser
 '''
-  $ ./runPySeleniumTests.sh  —docker —browser firefox
+./runPySeleniumTests.sh  —docker —browser firefox
 '''
 
 4.  View test results with Allure reports.  Test results should be saved under directory /test_results/allure_results 
 '''
-  $ allure serve test_results/allure_results 
+allure serve test_results/allure_results 
 '''
 
 5.  Don’t forget to bring down the containers after tests are finished
 '''
-  $ docker-compose down
+docker-compose down
 '''
 
 ### Run Tests  Local - Mac

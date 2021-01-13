@@ -3,7 +3,7 @@
 #Defaults
 browser_type="chrome"
 smoke=false
-docker_container=false
+docker=false
 virtualenv_enable=false
 email=""
 password=""
@@ -26,8 +26,8 @@ do
         "-s" | "--smoke")
         smoke=true;;
 
-        "-d" | "--docker-container")
-        docker_container=true;;
+        "-d" | "--docker")
+        docker=true;;
 
         "--email")
         shift
@@ -48,15 +48,15 @@ if [ "$email" != "" ] && [ "$password" != "" ]; then
     strUserEmailPasswordArgs=" --email $email --pwd $password"
 fi
 
-if [ "$smoke" == true ] && [ "$docker_container" == true ]; then
+if [ "$smoke" == true ] && [ "$docker" == true ]; then
     echo " Running SMOKE automated tests in DOCKER $browser_type standalone containers"
     docker-compose up -d --build selenium_${browser_type} py_tests_${browser_type}_smoke
 
-elif [ "$smoke" == false ]  && [ "$docker_container" == true ]; then
+elif [ "$smoke" == false ]  && [ "$docker" == true ]; then
     echo " Running REGRESSION automated tests in DOCKER $browser_type standalone containers"
     docker-compose up --build selenium_"$browser_type" py_tests_$browser_type
 
-elif [ "$smoke" == true ] && [ "$docker_container" == false ]; then
+elif [ "$smoke" == true ] && [ "$docker" == false ]; then
     isVirtualEnvOn
     echo " Running SMOKE automated tests in $browser_type LOCAL platform."
     if [ "$virtualenv_enable" == true ]; then
@@ -64,7 +64,7 @@ elif [ "$smoke" == true ] && [ "$docker_container" == false ]; then
     else
         echo " Virtual Environment not detected to run PyTest tests.  Please activate Virtual Environment and try again."
     fi
-elif [ "$smoke" == false ] && [ "$docker_container" == false ]; then
+elif [ "$smoke" == false ] && [ "$docker" == false ]; then
     isVirtualEnvOn
     echo " Running REGRESSION automated tests in $browser_type LOCAL platform."
     if [ "$virtualenv_enable" == true ]; then

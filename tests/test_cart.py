@@ -2,11 +2,13 @@ from test_base import *
 from pages.home import Home
 from pages.cart import Cart
 import pytest
+from util.util import getNowDateTime
 
 class TestCart(TestBase):
     
     @pytest.mark.smoke
     @allure.title("Cart - add item")
+    @allure.description(" Verify user is able to add item to the cart - Last run: "+ getNowDateTime())
     def test_add_item_to_cart(self, driver):
         home = Home(driver)
         home.add_to_cart_home_feature_item_by_index(0)

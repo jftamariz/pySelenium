@@ -1,12 +1,15 @@
 from test_base import *
 from pages.home import Home
 from pages.cart import Cart
+from util.util import getNowDateTime
 
 class TestLogin(TestBase):
 
     @pytest.mark.smoke
     @allure.title("Login successful")
+    @allure.description(" Verify user is able to login successfuly  - Last run: "+ getNowDateTime())
     def test_login_successful(self, driver, user):
+
         if user is None :
             TestBase.skip_test(" login_successful - This test required a regustered user's email and password.  \n  Please provide user email (--email) and password  (--pwd) as command line arguments and try again")
         
@@ -19,6 +22,7 @@ class TestLogin(TestBase):
         sign_in.logout()
         
     @allure.title("Login with invalid email")
+    @allure.description(" Verify user is not able to login with invalid format email - Last run: "+ getNowDateTime())
     def test_login_invalid_email(self, driver):
 
         sign_in = Home(driver).sign_in()
@@ -28,6 +32,7 @@ class TestLogin(TestBase):
         assert error_str == "Invalid email address."," Expected: 'Invalid email address.' invalid email error.   Actual: {0}".format(error_str)
 
     @allure.title("Login with missing password")
+    @allure.description(" Verify error is displayed when user logs in with missing password- Last run: "+ getNowDateTime())
     def test_login_missing_password(self, driver):
         sign_in = Home(driver).sign_in()
         sign_in.write_email("some-valid-email@gmail.com")
@@ -36,6 +41,7 @@ class TestLogin(TestBase):
         assert error_str == "Password is required."," Expected: 'Password is required.' missing password error.   Actual: {0}".format(error_str)
 
     @allure.title("Login with wrong password")
+    @allure.description(" Verify user is not able to login after entering wrong password - Last run: "+ getNowDateTime())
     def test_login_wrong_password(self, driver, user):
         if user is None:
             TestBase.skip_test(" login_wrong_password -  User email and Password not provided as command line argument.  Please provide user email and password and try again")

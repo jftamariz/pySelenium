@@ -77,5 +77,3 @@ class BasePage(object):
         self.driver.execute_script("document.body.style.zoom='zoom %'")
 
 
-    def getNowTimestamp(self):
-        return datetime.datetime.now().strftime('%Y%m%d%H%M%S')

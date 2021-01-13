@@ -1,6 +1,7 @@
 # pySelenium
 
 It’s a Selenium and Pytest based automation framework.  
+
 A sample E-commerce (http://automationpractice.com) website is used to demonstrate its UI E2E test capabilities.
 
 ### Run Tests on Docker Containers 
@@ -33,7 +34,7 @@ the other containers running the Selenium-Pytest automation scripts.
   $ docker-compose down
 ```
 
-### Run Tests  Local - Mac
+### Run Tests Local - Mac
 Running tests on a Mac will require more installation than running on them a Docker container
 
 1.  Install the required applications
@@ -44,8 +45,8 @@ Running tests on a Mac will require more installation than running on them a Doc
 	*  Allure 2.13+
 	
 	Optional
-	*  Chromedriver - this repo includes a Chromedriver executable under  the /driver filter.  Feel free to download a different version.
-	*  Gheckodriver - this repo includes a Firefox-Geckodriver executable under the /driver filter.  Feel free to download a different version.
+	*  [Chromedriver] (https://chromedriver.chromium.org/downloads) - this repo includes a Chromedriver executable under  the /driver folder.  Feel free to download a different version.
+	*  [Gheckodriver] (https://github.com/mozilla/geckodriver/releases) - this repo includes a Firefox-Geckodriver executable under the /driver folder.  Feel free to download a different version.
 	
   _Note:  These browser driver executables may need updated access mode_
   ```
@@ -81,11 +82,18 @@ Running tests on a Mac will require more installation than running on them a Doc
 
 7.  View test results with Allure reports.  Test results should be saved under directory /test_results/allure_results 
 ```
-  allure serve test_results/allure_results 
+  $ allure serve test_results/allure_results 
 ```
 
 8.  Don’t forget to bring down the containers after tests are finished.
 ```
-  docker-compose down
+  $ docker-compose down
 ```
 
+### Run Parallel Tests Local - Mac
+Automation tests can also be run in parallel.  Please complete steps 1-3 from the above Run Test Local section.
+
+1.  Run Regression tests in parallel with Chrome browser.  Example below will run tests in parallel with 3 Chrome browsers max
+```
+  $ pytest -s -n 3 tests/ --localdrive --alluredir=test_results/allure_results/
+```

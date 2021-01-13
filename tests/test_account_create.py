@@ -16,5 +16,5 @@ class TestAccountCreate(TestBase):
         auth.click_create_account()
         auth.sleep(3)
         auth.read_error_create_account()
-        print("  date time stamp[:  "+ util.getNowTimestamp())
+       
 

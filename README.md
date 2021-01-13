@@ -45,8 +45,8 @@ Running tests on a Mac will require more installation than running on them a Doc
 	*  Allure 2.13+
 	
 	Optional
-	*  [Chromedriver] (https://chromedriver.chromium.org/downloads) - this repo includes a Chromedriver executable under  the /driver folder.  Feel free to download a different version.
-	*  [Gheckodriver] (https://github.com/mozilla/geckodriver/releases) - this repo includes a Firefox-Geckodriver executable under the /driver folder.  Feel free to download a different version.
+	*  [Chromedriver](https://chromedriver.chromium.org/downloads) - this repo includes a Chromedriver executable under  the /driver folder.  Feel free to download a different version.
+	*  [Gheckodriver](https://github.com/mozilla/geckodriver/releases) - this repo includes a Firefox-Geckodriver executable under the /driver folder.  Feel free to download a different version.
 	
   _Note:  These browser driver executables may need updated access mode_
   ```

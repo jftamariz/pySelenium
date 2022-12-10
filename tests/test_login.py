@@ -1,55 +1,67 @@
 from test_base import *
 from pages.home import Home
 from pages.cart import Cart
-from util.util import getNowDateTime
+from util.util import get_now_datetime
+import allure
+import pytest
+
 
 class TestLogin(TestBase):
 
     @pytest.mark.smoke
     @allure.title("Login successful")
-    @allure.description(" Verify user is able to login successfuly  - Last run: "+ getNowDateTime())
+    @allure.description(" Verify user is able to login successfuly  - Last run: "+ get_now_datetime())
     def test_login_successful(self, driver, user):
 
         if user is None :
-            TestBase.skip_test(" login_successful - This test required a regustered user's email and password.  \n  Please provide user email (--email) and password  (--pwd) as command line arguments and try again")
+            TestBase.skip_test(" login_successful - This test required a regustered user's email and password. " +
+                               "\n  Please provide user email (--email) and password  (--pwd) as command line " +
+                               "arguments and try again")
         
         sign_in = Home(driver).sign_in()
         sign_in.write_email(user["email"])
+        sign_in.click_continue_with_email()
         sign_in.write_password(user["password"])
-        account = sign_in.sign_in()
+        sign_in.click_continue_with_email()
         
-        assert account.read_account_welcome_msg() == "Welcome to your account. Here you can manage all of your personal information and orders."," Expected a successful Sign in"
+        assert sign_in.get_display_name()
         sign_in.logout()
         
     @allure.title("Login with invalid email")
-    @allure.description(" Verify user is not able to login with invalid format email - Last run: "+ getNowDateTime())
+    @allure.description(" Verify user is not able to login with invalid format email - Last run: "+ get_now_datetime())
     def test_login_invalid_email(self, driver):
 
         sign_in = Home(driver).sign_in()
         sign_in.write_email("invalid-emailgmail.com")
-        sign_in.click_sign_in()
+        sign_in.click_continue_with_email()
         error_str = sign_in.read_error_alert()
-        assert error_str == "Invalid email address."," Expected: 'Invalid email address.' invalid email error.   Actual: {0}".format(error_str)
+        assert error_str == "Please enter a valid email address",\
+            "Expected: 'Please enter a valid email address' invalid email error.   Actual: {0}".format(error_str)
 
     @allure.title("Login with missing password")
-    @allure.description(" Verify error is displayed when user logs in with missing password- Last run: "+ getNowDateTime())
-    def test_login_missing_password(self, driver):
+    @allure.description(" Verify error is displayed when user logs in with missing password- Last run: "+ get_now_datetime())
+    def test_login_missing_password(self, driver, user):
         sign_in = Home(driver).sign_in()
-        sign_in.write_email("some-valid-email@gmail.com")
-        sign_in.click_sign_in()
+        sign_in.write_email(user["email"])
+        sign_in.sleep(2)
+        sign_in.click_continue_with_email()
         error_str = sign_in.read_error_alert()
-        assert error_str == "Password is required."," Expected: 'Password is required.' missing password error.   Actual: {0}".format(error_str)
+        assert error_str == "Required field",\
+            " Expected: 'Required field' missing password error.   Actual: {0}".format(error_str)
 
     @allure.title("Login with wrong password")
-    @allure.description(" Verify user is not able to login after entering wrong password - Last run: "+ getNowDateTime())
+    @allure.description(" Verify user is not able to login after entering wrong password - Last run: "+ get_now_datetime())
     def test_login_wrong_password(self, driver, user):
         if user is None:
-            TestBase.skip_test(" login_wrong_password -  User email and Password not provided as command line argument.  Please provide user email and password and try again")
+            TestBase.skip_test(" login_wrong_password - User email and Password not provided as command line argument." +
+                               "Please provide user email and password and try again")
        
         sign_in = Home(driver).sign_in()
         sign_in.write_email(user["email"])
+        sign_in.click_continue_with_email()
         sign_in.write_password("wrong password")
-        sign_in.click_sign_in()
-        error_str = sign_in.read_error_alert()
-        assert error_str == "Authentication failed."," Expected: 'authentication failed.' wrong password error.   Actual: {0}".format(error_str)
-    
+        sign_in.click_continue_with_email()
+        error_str = sign_in.read_sign_in_error()
+        assert error_str == "The email address and/or password you entered do not match any accounts on record. " + \
+                            "Need help?\nReset your password.", \
+                            " Expected: 'authentication failed.' wrong password error.   Actual: {0}".format(error_str)

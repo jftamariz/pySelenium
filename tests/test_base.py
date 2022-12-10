@@ -1,17 +1,10 @@
-import sys
-import os
 import pytest
-import time
-import allure
-from selenium import webdriver
 from util.driver_factory import *
-
 
 
 class TestBase():
 
-    
-    @pytest.fixture(scope="session")
+    @pytest.fixture()
     def driver(request, test_args):
         driver = DriverFactory.create_web_driver(**test_args)
         if driver:
@@ -19,16 +12,15 @@ class TestBase():
         else:
             TestBase.skip_test(" invalid Driver. ")
     
-    @pytest.fixture(scope="session")
+    @pytest.fixture()
     def setup_teardown(request, driver):
         # Setup
-
+        print(" ------------------------ Driver Init ------------------")
 
         yield
-        # Tear Down 
-        driver.close()
+        # Tear Down
+        print(" ------------------------ Driver quit ------------------")
         driver.quit()
-        
 
     @pytest.fixture
     def user(request, test_args):

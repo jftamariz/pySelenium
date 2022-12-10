@@ -1,14 +1,13 @@
 from test_base import *
 from pages.home import Home
 from util.util import *
+import allure
 
 
 class TestAccountCreate(TestBase):
 
-
-
     @allure.title("Login - Create new account")
-    @allure.description(" Verify user is able to create a new account - Last run: "+ getNowDateTime())
+    @allure.description(" Verify user is able to create a new account - Last run: "+ get_now_datetime())
     def test_login_create_account(self, driver):
 
         auth = Home(driver).sign_in()

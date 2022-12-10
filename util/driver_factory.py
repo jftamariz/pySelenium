@@ -8,15 +8,16 @@ import time
 from tests.test_base import TestBase
 from sys import platform
 
+
 class DriverFactory:
 
     @staticmethod
     def create_web_driver(**kwargs):
-        '''
+        """"
             Returns a WebDriver instance based on configurationa and capabilities provided under kwargs
             kwargs -  A {} with the following parameters:
                 browser:  
-        ''' 
+       """
         if kwargs["browser"] == "chrome":
 
             if kwargs["localdriver"]:
@@ -35,7 +36,6 @@ class DriverFactory:
                 return None
 
             return webdriver.Remote("http://"+kwargs["host"]+":"+kwargs["port"]+"/wd/hub", DesiredCapabilities.CHROME)
-   
 
         elif kwargs["browser"] == "firefox":
             if kwargs["localdriver"]:
@@ -85,16 +85,15 @@ class DriverFactory:
             TestBase.skip_test(" -  Browser type {0} not recognize.  Provide from supported browsers (--browser) Chrome, Safari, Firefox and IE".format(kwargs["browser"]))
             return None
 
-
     @staticmethod
     def get_filedriver_exe(browser):
-        ''' 
+        """
             Returns the name of the executable driver file based on browser type.  
             Note:
             1.  Make sure driver file is set to be able to execute (i.e. chmod +x geckodriver)
             2.  Chromdedriver download - https://chromedriver.chromium.org/downloads
             3.  Filrefox driver download - https://github.com/mozilla/geckodriver/releases
-        '''
+        """
         if browser == "firefox":
             if 'darwin' in platform.lower():
                 return os.path.join(os.getcwd(),'drivers','geckodriver')
@@ -118,14 +117,13 @@ class DriverFactory:
             elif 'linux' in platform.lower():
                 TestBase.skip_test(" - Attempting to run test(s) using IE on Linux.  Only supports IE on Windows")
                 return None    
-        
 
     @staticmethod
     def isOpen(ip, port, wait_time=5):
-        '''
+        """
             Return True if Selenium Node or Standalone cotainer is up and running.  
             Wait for 'wait_time' seconds before it returns False if url and port is closed.
-        '''
+        """
         result = False
         for i in range(wait_time):
             try:

@@ -8,17 +8,16 @@ import selenium.webdriver.support.ui as ui
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
- 
+
+
 class BasePage(object):
     """
     Base class that all page objects inheret from
     """
     __env = None
 
-
     def __init__(self, driver):
         self.driver = driver
-    
 
     def get_element(self, *by_loc):
         return self.driver.find_element(*by_loc)
@@ -41,7 +40,7 @@ class BasePage(object):
     def read(self, by_loc):
         return self.wait_element(by_loc).text
 
-    def wait_element(self, by_loc, wait_time=20):
+    def wait_element(self, by_loc, wait_time=6):
         '''
             wait for element, and handled exception
         '''
@@ -51,10 +50,10 @@ class BasePage(object):
             )
         except Exception:
             return None
+
     def wait_element_visibility(self, element):
         
         return WebDriverWait(self.driver, 5).until(EC.visibility_of(element))
-   
 
     def wait_text_element(self, by_loc, wait_text, wait_time=20):
         return WebDriverWait(self.driver, wait_time).until(EC.text_to_be_present_in_element(by_loc, wait_text))
@@ -63,11 +62,14 @@ class BasePage(object):
         time.sleep(time_sec)
 
     def logout(self):
-        self.click((By.XPATH, "//a[@class='logout']"))
-        self.wait_element((By.ID, "login_form"))
+        self.hover_element(self.get_display_name())
+        self.driver.find_element(By.LINK_TEXT, "Sign out").click()
 
     def read_error_alert(self):
-        return self.read((By.XPATH, "//div[@class='alert alert-danger']/ol/li"))
+        return self.read((By.CSS_SELECTOR, "[data-rf-test-id='validationFeedback']"))
+
+    def read_sign_in_error(self):
+        return self.read((By.CSS_SELECTOR, "[data-rf-test-name='message']"))
 
     def select_options(self, by_loc, value):
         select_by_value = Select(self.get_element(by_loc))
@@ -76,4 +78,11 @@ class BasePage(object):
     def zoom_out(self):
         self.driver.execute_script("document.body.style.zoom='zoom %'")
 
+    def get_display_name(self):
+        return self.wait_element((By.CSS_SELECTOR, '[data-rf-test-name="displayName"]'))
 
+    def hover_element(self, elem):
+        ActionChains(self.driver).move_to_element(elem).perform()
+
+    def get_inner_html(self, elem):
+        return elem.get_attribute('innerHTML')

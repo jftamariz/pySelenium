@@ -4,8 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import subprocess
 import socket
-import time 
 from tests.test_base import TestBase
+import time
 from sys import platform
 
 

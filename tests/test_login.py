@@ -1,4 +1,4 @@
-from test_base import *
+from test_base import TestBase
 from pages.home import Home
 from pages.cart import Cart
 from util.util import get_now_datetime
@@ -6,18 +6,13 @@ import allure
 import pytest
 
 
-class TestLogin(TestBase):
+@pytest.mark.usefixtures("user_email_password_required")
+class TestLogin:
 
     @pytest.mark.smoke
     @allure.title("Login successful")
     @allure.description(" Verify user is able to login successfuly  - Last run: "+ get_now_datetime())
     def test_login_successful(self, driver, user):
-
-        if user is None :
-            TestBase.skip_test(" login_successful - This test required a regustered user's email and password. " +
-                               "\n  Please provide user email (--email) and password  (--pwd) as command line " +
-                               "arguments and try again")
-        
         sign_in = Home(driver).sign_in()
         sign_in.write_email(user["email"])
         sign_in.click_continue_with_email()
@@ -43,7 +38,7 @@ class TestLogin(TestBase):
     def test_login_missing_password(self, driver, user):
         sign_in = Home(driver).sign_in()
         sign_in.write_email(user["email"])
-        sign_in.sleep(2)
+        sign_in.click_continue_with_email()
         sign_in.click_continue_with_email()
         error_str = sign_in.read_error_alert()
         assert error_str == "Required field",\
@@ -52,10 +47,6 @@ class TestLogin(TestBase):
     @allure.title("Login with wrong password")
     @allure.description(" Verify user is not able to login after entering wrong password - Last run: "+ get_now_datetime())
     def test_login_wrong_password(self, driver, user):
-        if user is None:
-            TestBase.skip_test(" login_wrong_password - User email and Password not provided as command line argument." +
-                               "Please provide user email and password and try again")
-       
         sign_in = Home(driver).sign_in()
         sign_in.write_email(user["email"])
         sign_in.click_continue_with_email()

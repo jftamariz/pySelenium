@@ -30,7 +30,6 @@ class BasePage(object):
 
     def click(self, by_loc):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(by_loc)).click()
-        EC.text_to_be_present_in_element
 
     def write(self, by_loc, message):
         input_field = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(by_loc))

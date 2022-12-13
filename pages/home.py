@@ -1,13 +1,16 @@
 from pages.base_page import *
 from pages.authentication import *
 from pages.cart import *
+from pages.homes import Homes
+from pages.rentals import Rentals
+from pages.search_result import SearchPage
 from selenium.webdriver.common.action_chains import ActionChains
 
 
 class Home(BasePage):
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
         
         if self.driver.current_url != "https://www.redfin.com":
             self.driver.get("https://www.redfin.com");
@@ -54,3 +57,17 @@ class Home(BasePage):
         btn_add_cart.click()
         self.wait_element((By.XPATH, "//*[@title='Continue shopping']")).click()
         self.sleep(2)
+
+    def search_to_buy(self, search_term) -> Homes:
+        self.click((By.CSS_SELECTOR, '[data-rf-test-name="searchTab"]'))
+        self.write((By.CSS_SELECTOR, '[data-rf-test-name="search-box-input"]'), "22003")
+        self.click((By.CSS_SELECTOR, '[data-rf-test-name="searchButton"]'))
+        self.sleep(3)
+        return Homes(self.driver)
+
+    def search_to_rent(self, search_term) -> Rentals:
+        self.click((By.CSS_SELECTOR, '[data-rf-test-name="rentTab"]'))
+        self.write((By.CSS_SELECTOR, '[data-rf-test-name="search-box-input"]'), "22003")
+        self.click((By.CSS_SELECTOR, '[data-rf-test-name="searchButton"]'))
+        self.sleep(3)
+        return Rentals(self.driver)

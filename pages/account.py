@@ -1,5 +1,6 @@
 from pages.base_page import *
 
+
 class Account(BasePage):
 
     def __init__(self, driver):

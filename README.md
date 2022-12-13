@@ -2,7 +2,7 @@
 
 It’s a Selenium and Pytest based automation framework.  
 
-A sample E-commerce (http://automationpractice.com) website is used to demonstrate its UI E2E test capabilities.
+REDFIN  (https://www.redfin.com) website is used to demonstrate its UI E2E test capabilities.
 
 ### Run Tests on Docker Containers 
 PySelenium tests can be run using 2 Docker containers, one container with Chrome or Firefox web browser and 

@@ -29,8 +29,10 @@ class BasePage(object):
             return self.driver.find_elements(by, locator)
 
     def click(self, by_loc, element=None):
-        self.wait_element(by_loc, 3, element, False).click()
-        #WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(by_loc)).click()
+        if element:
+            self.wait_element(by_loc, 3, element, False).click()
+
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(by_loc)).click()
 
     def write(self, by_loc, message):
         input_field = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(by_loc))

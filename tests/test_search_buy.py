@@ -25,13 +25,16 @@ class TestSearchToBuy(TestBase):
         home = Home(driver)
         results = home.search_to_buy("22003")
         results.get_total_sarch_result_number()
-        target_property_result_index = 1
-        results.read_property_card_price(target_property_result_index)
+        target_property_result_index = 0
+        price = results.read_property_card_price(target_property_result_index)
         total_bebs = results.read_property_card_bed_number(target_property_result_index)
         total_baths = results.read_property_card_bath_number(target_property_result_index)
         total_sqft = results.read_property_card_size_sqft(target_property_result_index)
         phone = results.read_property_card_phone(target_property_result_index)
+        details = results.view_property_card(target_property_result_index)
 
-        results.view_property_card(0)
-        results.sleep(4)
+        assert details.price() == price
+        assert details.bedrooms() == total_bebs
+        assert details.bathrooms() == total_baths
+        assert details.sqft() == total_sqft
 

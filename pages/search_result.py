@@ -34,7 +34,7 @@ class SearchPage(BasePage):
         baths_number = baths.split(' ')[0]
         if "-" in baths_number:
             return baths_number.split('-')[1]
-        return int(baths_number)
+        return int(float(baths_number))
 
     def read_property_card_size_sqft(self, index):
         cards = self._get_search_result_cards()
@@ -52,6 +52,7 @@ class SearchPage(BasePage):
     def view_property_card(self, index):
         cards = self._get_search_result_cards()
         self.click((By.CSS_SELECTOR, '[data-rf-test-name="basicNode-homeCard"]'), cards[index])
+
         return PropertyDetails(self.driver)
 
     def read_search_mode_filter(self):

@@ -21,16 +21,16 @@ class Home(BasePage):
         self.wait_element((By.CSS_SELECTOR, '[data-rf-test-name="SignInLink"]')).click()
         return Authentication(self.driver)
 
-    def search_to_buy(self, search_term) -> Homes:
+    def search_to_buy(self, search_term: str) -> Homes:
         self.click((By.CSS_SELECTOR, '[data-rf-test-name="searchTab"]'))
-        self.write((By.CSS_SELECTOR, '[data-rf-test-name="search-box-input"]'), "22003")
+        self.write((By.CSS_SELECTOR, '[data-rf-test-name="search-box-input"]'), search_term)
         self.click((By.CSS_SELECTOR, '[data-rf-test-name="searchButton"]'))
         self.sleep(3)
         return Homes(self.driver)
 
-    def search_to_rent(self, search_term) -> Rentals:
+    def search_to_rent(self, search_term: str) -> Rentals:
         self.click((By.CSS_SELECTOR, '[data-rf-test-name="rentTab"]'))
-        self.write((By.CSS_SELECTOR, '[data-rf-test-name="search-box-input"]'), "22003")
+        self.write((By.CSS_SELECTOR, '[data-rf-test-name="search-box-input"]'), search_term)
         self.click((By.CSS_SELECTOR, '[data-rf-test-name="searchButton"]'))
         self.sleep(3)
         return Rentals(self.driver)

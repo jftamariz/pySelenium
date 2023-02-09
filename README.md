@@ -12,6 +12,7 @@ the other containers running the Selenium-Pytest automation scripts.
 
   * Docker 19+
   * Allure 2.13+
+  * Pip - install Virtualenv (For Development Only)
   
 2.  Run Smoke tests with Chrome browser in two Docker containers
 
@@ -39,19 +40,11 @@ Running tests on a Mac will require more installation than running on them a Doc
 
 1.  Install the required applications
 
-	*  Python 3.5+
-	*  Pip
-	*  VirtualEnv
-	*  Allure 2.13+
-	
-	Optional
-	*  [Chromedriver](https://chromedriver.chromium.org/downloads) - this repo includes a Chromedriver executable under  the /driver folder.  Feel free to download a different version.
-	*  [Gheckodriver](https://github.com/mozilla/geckodriver/releases) - this repo includes a Firefox-Geckodriver executable under the /driver folder.  Feel free to download a different version.
-	
-  _Note:  These browser driver executables may need updated access mode_
-  ```
-    $ chmod +x chromedriver
-  ```
+    * Python 3.5+
+    * Pip
+    * VirtualEnv
+    * Allure 2.13+
+
   
 2.  Create and activate a Virtual Environment
 ```

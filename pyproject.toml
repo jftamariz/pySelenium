@@ -1,0 +1,13 @@
+[tool.pytest.ini_options]
+markers = [
+    "smoke:  mark test as part of Smoke tests",
+    "regression:  mark test as part of the Regression tests",
+]
+
+[mypy]
+python_version = 3.8
+
+[tool.mypy]
+ignore_missing_imports = true
+disallow_any_unimported = true
+disallow_incomplete_defs = true

@@ -7,5 +7,5 @@ class Rentals(SearchPage):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def read_porperty_card_type(self, index: int) -> str:
+    def read_porperty_card_type(self) -> str:
         return self.read((By.CSS_SELECTOR, '[class*="RichSelect__button"]'))

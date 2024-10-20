@@ -1,7 +1,9 @@
 import re
 from pages.base_page import *
+from pages.components.search_type import SearchType
 from pages.details import PropertyDetails
 from util.util import convert
+
 
 
 class SearchPage(BasePage):
@@ -10,12 +12,20 @@ class SearchPage(BasePage):
         super().__init__(driver)
         self.wait_element((By.ID, "results-display"), 6)
         self.result_list = self._get_search_result_cards();
+        self.search_type = self._get_search_type()
 
     def _get_search_result_cards(self):
         return self.get_elements(By.CSS_SELECTOR, '[data-rf-test-name="mapHomeCard"]')
 
+    def _get_search_type(self):
+        if self.driver.current_url.endswith("rent"):
+            return SearchType.RENT
+        return SearchType.SALE
+
     def get_total_sarch_result_number(self):
         total_homes = self.read((By.CSS_SELECTOR, '[data-rf-test-id="homes-description"]'))
+        if self._get_search_type() == SearchType.RENT:
+            return int(re.search(r'of (.*?) rentals', total_homes).group(1))
         return int(re.search(r'of (.*?) homes', total_homes).group(1))
 
     def read_property_card_price(self, index):

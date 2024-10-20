@@ -26,7 +26,7 @@ class TestSearchToBuy(TestBase):
         results = home.search_to_buy("20120")
         search_result_total_label = results.get_total_sarch_result_number()
 
-        assert search_result_total_label > len(results.result_list), "The total search result label is 2 more" \
+        assert search_result_total_label == len(results.result_list), "The total search result label is 2 more" \
                                                                      " of the actual home listed in the result"
         target_property_result_index = 1
         assert results.read_property_card_price(target_property_result_index) > 1000

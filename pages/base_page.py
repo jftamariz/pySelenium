@@ -1,13 +1,10 @@
-import time
-import datetime
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 import selenium.webdriver.support.expected_conditions as EC
-import selenium.webdriver.support.ui as ui
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
+import time
 
 
 class BasePage(object):
@@ -40,7 +37,10 @@ class BasePage(object):
         input_field.send_keys(message)
 
     def read(self, by_loc, element=None, ignore_error=True):
-        return self.wait_element(by_loc, 3, element, ignore_error).text
+        target_element = self.wait_element(by_loc, 3, element, ignore_error)
+        if target_element:
+            return self.wait_element(by_loc, 3, element, ignore_error).text
+        return ""
 
     def wait_element(self, by_loc, wait_time=6, element=None, ignore_error=True):
         """
@@ -81,7 +81,7 @@ class BasePage(object):
     def select_options(self, by_loc, value):
         select_by_value = Select(self.get_element(by_loc))
         select_by_value.select_by_visible_text(value)
-
+         
     def zoom_out(self):
         self.driver.execute_script("document.body.style.zoom='zoom %'")
 

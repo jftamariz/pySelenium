@@ -1,6 +1,4 @@
-from test_base import TestBase
 from pages.home import Home
-from pages.cart import Cart
 from util.util import get_now_datetime
 import allure
 import pytest
@@ -25,7 +23,6 @@ class TestLogin:
     @allure.title("Login with invalid email")
     @allure.description(" Verify user is not able to login with invalid format email - Last run: "+ get_now_datetime())
     def test_login_invalid_email(self, driver):
-
         sign_in = Home(driver).sign_in()
         sign_in.write_email("invalid-emailgmail.com")
         sign_in.click_continue_with_email()

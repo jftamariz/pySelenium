@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
     selenium_chrome:
-        image: selenium/standalone-chrome
+        image: selenium/standalone-chrome:latest
         container_name: selenium_chrome
         networks:
           - pyselenium-net

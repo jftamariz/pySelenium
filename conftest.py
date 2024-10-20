@@ -1,6 +1,6 @@
+import os
 import pytest
 from util.driver_factory import *
-from tests.test_base import TestBase
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'tests'))
 

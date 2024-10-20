@@ -1,12 +1,9 @@
-import os
-import sys
+from sys import platform
 from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-import subprocess
 import socket
+import sys
 from tests.test_base import TestBase
 import time
-from sys import platform
 
 
 class DriverFactory:
@@ -35,7 +32,8 @@ class DriverFactory:
                 TestBase.skip_test(" Running in DOCKER:CHROME mode -  Attempting to reach Selenium standalone continaer at http://{0}:{1}/ FAILED.\n  Provide an open --host and/or --port values and try again.".format(kwargs["host"], kwargs["port"] ))
                 return None
 
-            return webdriver.Remote("http://"+kwargs["host"]+":"+kwargs["port"]+"/wd/hub", DesiredCapabilities.CHROME)
+            options = webdriver.ChromeOptions()
+            return webdriver.Remote("http://"+kwargs["host"]+":"+kwargs["port"]+"/wd/hub", options=options)
 
         elif kwargs["browser"] == "firefox":
             if kwargs["localdriver"]:
@@ -53,9 +51,8 @@ class DriverFactory:
                 TestBase.skip_test(" Running in DOCKER:FIREFOX mode -  Attempting to reach Selenium standalone continaer at http://{0}:{1}/ FAILED.\n  Provide an open --host and/or --port values and try again.".format(kwargs["host"], kwargs["port"] ))
                 return None
 
-            return webdriver.Remote("http://"+kwargs["host"]+":"+kwargs["port"]+"/wd/hub", DesiredCapabilities.FIREFOX)
-   
-
+            options = webdriver.FirefoxOptions()
+            return webdriver.Remote("http://"+kwargs["host"]+":"+kwargs["port"]+"/wd/hub", options=options)
 
         elif kwargs["browser"] == "ie":
             if not kwargs["localdriver"]:
@@ -78,7 +75,7 @@ class DriverFactory:
 
             if not 'darwin' in platform.lower():
                 TestBase.skip_test(" - Attempting to run test on Safari running on Windows or Linux?  Only supports Safari on Mac")
-     
+
             return webdriver.Safari()
 
         else:

@@ -16,7 +16,7 @@ class TestSearchToRent(TestBase):
         home = Home(driver)
         results = home.search_to_rent(zip_code)
         assert results.read_header() == f'{zip_code} Apartments for Rent'
-        assert results.read_search_mode_filter() == 'For rent'
+        assert results.read_search_type_filter() == 'For rent'
 
     @pytest.mark.smoke
     @allure.title("Rent - Search")
@@ -25,6 +25,8 @@ class TestSearchToRent(TestBase):
         home = Home(driver)
         results = home.search_to_rent("22003")
         results.get_total_sarch_result_number()
+
+
         target_property_result_index = 1
         results.read_property_card_price(target_property_result_index)
         total_bebs = results.read_property_card_bed_number(target_property_result_index)
@@ -32,5 +34,3 @@ class TestSearchToRent(TestBase):
         total_sqft = results.read_property_card_size_sqft(target_property_result_index)
         property_type = results.read_porperty_card_type(target_property_result_index)
 
-        results.view_property_card(0)
-        results.sleep(4)

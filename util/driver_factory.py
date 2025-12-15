@@ -33,6 +33,7 @@ class DriverFactory:
                 return None
 
             options = webdriver.ChromeOptions()
+            options.add_argument("--window-size=1920,1080")
             return webdriver.Remote("http://"+kwargs["host"]+":"+kwargs["port"]+"/wd/hub", options=options)
 
         elif kwargs["browser"] == "firefox":

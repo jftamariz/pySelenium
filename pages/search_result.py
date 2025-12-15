@@ -18,15 +18,15 @@ class SearchPage(BasePage):
         return self.get_elements(By.CSS_SELECTOR, '[data-rf-test-name="mapHomeCard"]')
 
     def _get_search_type(self):
-        if self.driver.current_url.endswith("rent"):
+        if self.driver.current_url.endswith("rentals"):
             return SearchType.RENT
         return SearchType.SALE
 
     def get_total_sarch_result_number(self):
         total_homes = self.read((By.CSS_SELECTOR, '[data-rf-test-id="homes-description"]'))
         if self._get_search_type() == SearchType.RENT:
-            return int(re.search(r'of (.*?) rentals', total_homes).group(1))
-        return int(re.search(r'of (.*?) homes', total_homes).group(1))
+            return int(re.search(r'(.*?) rentals', total_homes).group(1))
+        return int(re.search(r'(.*?) homes', total_homes).group(1))
 
     def read_property_card_price(self, index):
         cards = self.result_list
@@ -73,8 +73,7 @@ class SearchPage(BasePage):
         return PropertyDetails(self.driver)
 
     def read_search_type_filter(self) -> str:
-        filters = self.get_elements(By.CSS_SELECTOR, '[class*="RichSelect__button"]')
-        return self.read((By.XPATH, ".//p"), filters[0])
+        return self.read((By.XPATH, '//p[@class="RichSelect__value text-ellipsis"]'))
 
     def read_header(self) -> str:
         return self.read((By.CSS_SELECTOR, '[data-rf-test-id="h1-header"]'))

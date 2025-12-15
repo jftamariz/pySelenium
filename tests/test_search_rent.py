@@ -17,7 +17,7 @@ class TestSearchToRent(TestBase):
 
         home = Home(driver)
         results = home.search_to_rent(zip_code)
-        assert results.read_header() == f'{zip_code}, {state} apartments for rent'
+        assert results.read_header() == f'{zip_code}, {state} rental listings'
         assert results.read_search_type_filter() == 'For rent'
 
     @pytest.mark.smoke
